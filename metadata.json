@@ -1,0 +1,19 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "zidan_araujo@hotmail.com",
+                "Name": "Zidan Araújo Haq"
+            }
+        ],
+        "Website": "https://translate.google.com/",
+        "Id": "plasmoid-google-translate",
+        "Name": "Google Translate Widget",
+        "Description": "Widget KDE Plasma para tradução usando Google Translate.",
+        "Icon": "translate-icon.svg",
+        "Version": "1.0.0",
+        "Category": "Language"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

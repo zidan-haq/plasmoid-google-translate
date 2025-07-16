@@ -1,0 +1,43 @@
+# Diretórios de dependência do Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Diretórios e arquivos do VS Code
+.vscode/
+.history/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Build do Qt (QML)
+*.qmlc
+*.jsc
+*.pro.user
+*.pro.user.*
+*.qrc.depends
+*.qrc.translations
+*.moc/
+*.obj/
+*.o
+*.exe
+*.dll
+*.so
+*.a
+*.qmake.stash
+Makefile*
+build-*/
+
+# Arquivos temporários
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Outros
+dist/
+.env
+
