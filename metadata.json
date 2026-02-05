@@ -15,5 +15,6 @@
         "Version": "1.0.0",
         "Category": "Language"
     },
+    "X-Plasma-Shortcut": "Ctrl+Meta+T",
     "X-Plasma-API-Minimum-Version": "6.0"
 }

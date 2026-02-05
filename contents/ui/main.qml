@@ -13,6 +13,34 @@ PlasmoidItem {
     property string translatedText: ""
     property bool loading: false
 
+    function translateRequest() {
+        root.loading = true
+        root.translatedText = ""
+        var xhr = new XMLHttpRequest()
+        var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
+            + encodeURIComponent(root.sourceLanguage)
+            + "&tl=" + encodeURIComponent(root.targetLanguage)
+            + "&dt=t&q=" + encodeURIComponent(root.inputText)
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                root.loading = false
+                if (xhr.status === 200) {
+                    try {
+                        var result = JSON.parse(xhr.responseText)
+                        root.translatedText = result[0][0][0]
+                    } catch (e) {
+                        root.translatedText = "Error parsing translation."
+                    }
+                } else {
+                    root.translatedText = "Translation failed."
+                }
+            }
+        }
+        xhr.open("GET", url)
+        xhr.send()
+    }
+
     fullRepresentation: ColumnLayout {
         Layout.preferredWidth: 400
         Layout.minimumWidth: 300
@@ -43,6 +71,13 @@ PlasmoidItem {
             placeholderText: "Type text to translate..."
             text: root.inputText
             onTextChanged: root.inputText = text
+
+            Keys.onPressed: {
+                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                    root.translateRequest()
+                    event.accepted = true // it avoid a new line insertion
+                }
+            }
         }
 
         QQC2.Button {
@@ -50,30 +85,7 @@ PlasmoidItem {
             text: "Translate"
             enabled: !root.loading && root.inputText.length > 0
             onClicked: {
-                root.loading = true
-                root.translatedText = ""
-                var xhr = new XMLHttpRequest()
-                var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
-                    + encodeURIComponent(root.sourceLanguage)
-                    + "&tl=" + encodeURIComponent(root.targetLanguage)
-                    + "&dt=t&q=" + encodeURIComponent(root.inputText)
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        root.loading = false
-                        if (xhr.status === 200) {
-                            try {
-                                var result = JSON.parse(xhr.responseText)
-                                root.translatedText = result[0][0][0]
-                            } catch (e) {
-                                root.translatedText = "Error parsing translation."
-                            }
-                        } else {
-                            root.translatedText = "Translation failed."
-                        }
-                    }
-                }
-                xhr.open("GET", url)
-                xhr.send()
+                root.translateRequest()
             }
         }
 
